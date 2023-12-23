@@ -376,7 +376,7 @@ class Boolean(DataType):
     """Boolean type."""
 
 
-class Utf8(DataType):
+class String(DataType):
     """UTF-8 encoded string type."""
 
 

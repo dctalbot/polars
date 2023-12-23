@@ -53,6 +53,7 @@ from polars.datatypes import (
     List,
     Null,
     Object,
+    String,
     Struct,
     Time,
     UInt8,
@@ -60,7 +61,6 @@ from polars.datatypes import (
     UInt32,
     UInt64,
     Unknown,
-    Utf8,
 )
 from polars.exceptions import (
     ArrowError,
@@ -257,7 +257,7 @@ __all__ = [
     "UInt64",
     "UInt8",
     "Unknown",
-    "Utf8",
+    "String",
     # polars.datatypes: dtype groups
     "DATETIME_DTYPES",
     "DURATION_DTYPES",

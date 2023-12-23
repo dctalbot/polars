@@ -39,6 +39,7 @@ from polars.datatypes import (
     List,
     Null,
     Object,
+    String,
     Struct,
     Time,
     UInt8,
@@ -46,7 +47,6 @@ from polars.datatypes import (
     UInt32,
     UInt64,
     Unknown,
-    Utf8,
 )
 from polars.dependencies import numpy as np
 from polars.dependencies import pyarrow as pa
@@ -72,7 +72,7 @@ if TYPE_CHECKING:
 PY_STR_TO_DTYPE: SchemaDict = {
     "float": Float64,
     "int": Int64,
-    "str": Utf8,
+    "str": String,
     "bool": Boolean,
     "date": Date,
     "datetime": Datetime("us"),
@@ -97,7 +97,7 @@ def _map_py_type_to_dtype(
     if python_dtype is int:
         return Int64
     if python_dtype is str:
-        return Utf8
+        return String
     if python_dtype is bool:
         return Boolean
     if issubclass(python_dtype, datetime):
@@ -223,7 +223,7 @@ class _DataTypeMappings:
             Float64: "f64",
             Decimal: "decimal",
             Boolean: "bool",
-            Utf8: "str",
+            String: "str",
             List: "list",
             Date: "date",
             Datetime: "datetime",
@@ -265,7 +265,7 @@ class _DataTypeMappings:
             Int32: int,
             Int16: int,
             Int8: int,
-            Utf8: str,
+            String: str,
             UInt8: int,
             UInt16: int,
             UInt32: int,
@@ -472,7 +472,7 @@ def numpy_char_code_to_dtype(dtype_char: str) -> PolarsDataType:
     """Convert a numpy character dtype to a Polars dtype."""
     dtype = np.dtype(dtype_char)
     if dtype.kind == "U":
-        return Utf8
+        return String
     try:
         return DataTypeMappings.NUMPY_KIND_AND_ITEMSIZE_TO_DTYPE[
             (dtype.kind, dtype.itemsize)

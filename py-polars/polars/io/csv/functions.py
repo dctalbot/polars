@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, BinaryIO, Callable, Mapping, Sequence, TextIO
 
 import polars._reexport as pl
-from polars.datatypes import N_INFER_DEFAULT, Utf8
+from polars.datatypes import N_INFER_DEFAULT, String
 from polars.io._utils import _prepare_file_arg
 from polars.io.csv._utils import _check_arg_is_1byte, _update_columns
 from polars.io.csv.batched_reader import BatchedCsvReader
@@ -279,7 +279,7 @@ def read_csv(
 
         # Fix list of dtypes when used together with projection as polars CSV reader
         # wants a list of dtypes for the x first columns before it does the projection.
-        dtypes_list: list[PolarsDataType] = [Utf8] * (max(projection) + 1)
+        dtypes_list: list[PolarsDataType] = [String] * (max(projection) + 1)
 
         for idx, column_idx in enumerate(projection):
             if idx < len(dtypes):
@@ -590,7 +590,7 @@ def read_csv_batched(
 
         # Fix list of dtypes when used together with projection as polars CSV reader
         # wants a list of dtypes for the x first columns before it does the projection.
-        dtypes_list: list[PolarsDataType] = [Utf8] * (max(projection) + 1)
+        dtypes_list: list[PolarsDataType] = [String] * (max(projection) + 1)
 
         for idx, column_idx in enumerate(projection):
             if idx < len(dtypes):

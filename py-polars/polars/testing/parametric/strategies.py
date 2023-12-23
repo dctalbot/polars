@@ -50,12 +50,12 @@ from polars.datatypes import (
     Int32,
     Int64,
     List,
+    String,
     Time,
     UInt8,
     UInt16,
     UInt32,
     UInt64,
-    Utf8,
     is_polars_dtype,
 )
 from polars.type_aliases import PolarsDataType
@@ -273,7 +273,7 @@ scalar_strategies: StrategyLookup = StrategyLookup(
         Duration("ms"): strategy_duration,
         Duration: strategy_duration,
         Categorical: strategy_categorical,
-        Utf8: strategy_utf8,
+        String: strategy_utf8,
         Binary: strategy_binary,
     }
 )

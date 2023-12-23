@@ -43,8 +43,8 @@ from polars.datatypes import (
     Float64,
     Null,
     Object,
+    String,
     Unknown,
-    Utf8,
     py_type_to_dtype,
 )
 from polars.dependencies import (
@@ -1719,7 +1719,7 @@ class DataFrame:
 
         if isinstance(item, pl.Series):
             dtype = item.dtype
-            if dtype == Utf8:
+            if dtype == String:
                 return self._from_pydf(self._df.select(item))
             elif dtype.is_integer():
                 return self._take_with_series(item._pos_idxs(self.shape[0]))
@@ -2123,7 +2123,7 @@ class DataFrame:
                 a = s.to_numpy(use_pyarrow=use_pyarrow)
                 arrays.append(
                     a.astype(str, copy=False)
-                    if tp == Utf8 and not s.null_count()
+                    if tp == String and not s.null_count()
                     else a
                 )
 
@@ -4267,7 +4267,7 @@ class DataFrame:
         schema = self.schema
 
         def _parse_column(col_name: str, dtype: PolarsDataType) -> tuple[str, str, str]:
-            fn = repr if schema[col_name] == Utf8 else str
+            fn = repr if schema[col_name] == String else str
             values = self[:max_n_values][col_name].to_list()
             val_str = ", ".join(fn(v) for v in values)  # type: ignore[operator]
             if len(col_name) > max_colname_length:

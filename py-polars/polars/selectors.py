@@ -20,8 +20,8 @@ from polars.datatypes import (
     Decimal,
     Duration,
     Object,
+    String,
     Time,
-    Utf8,
     is_polars_dtype,
 )
 from polars.expr import Expr
@@ -1848,7 +1848,7 @@ def string(include_categorical: bool = False) -> SelectorType:  # noqa: FBT001
     └─────┴─────┴─────┴──────┘
 
     """
-    string_dtypes: list[PolarsDataType] = [Utf8]
+    string_dtypes: list[PolarsDataType] = [String]
     if include_categorical:
         string_dtypes.append(Categorical)
 

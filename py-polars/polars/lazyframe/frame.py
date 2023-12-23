@@ -38,12 +38,12 @@ from polars.datatypes import (
     Int16,
     Int32,
     Int64,
+    String,
     Time,
     UInt8,
     UInt16,
     UInt32,
     UInt64,
-    Utf8,
     py_type_to_dtype,
 )
 from polars.dependencies import dataframe_api_compat, subprocess
@@ -4813,7 +4813,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
             elif isinstance(value, time):
                 dtypes = [Time]
             elif isinstance(value, str):
-                dtypes = [Utf8, Categorical]
+                dtypes = [String, Categorical]
             else:
                 # fallback; anything not explicitly handled above
                 dtypes = [infer_dtype(F.lit(value))]

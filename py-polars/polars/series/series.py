@@ -39,11 +39,11 @@ from polars.datatypes import (
     List,
     Null,
     Object,
+    String,
     Time,
     UInt32,
     UInt64,
     Unknown,
-    Utf8,
     dtype_to_ctype,
     is_polars_dtype,
     maybe_cast,
@@ -1149,7 +1149,7 @@ class Series:
         Ensures that `np.asarray(pl.Series(..))` works as expected, see
         https://numpy.org/devdocs/user/basics.interoperability.html#the-array-method.
         """
-        if not dtype and self.dtype == Utf8 and not self.null_count():
+        if not dtype and self.dtype == String and not self.null_count():
             dtype = np.dtype("U")
         if dtype:
             return self.to_numpy().__array__(dtype)
@@ -1631,7 +1631,7 @@ class Series:
                 "null_count": self.null_count(),
                 "sum": self.sum(),
             }
-        elif self.dtype == Utf8:
+        elif self.dtype == String:
             stats_dtype = Int64
             stats = {
                 "count": self.count(),
@@ -1641,7 +1641,7 @@ class Series:
         elif self.dtype.is_temporal():
             # we coerce all to string, because a polars column
             # only has a single dtype and dates: datetime and count: int don't match
-            stats_dtype = Utf8
+            stats_dtype = String
             stats = {
                 "count": str(self.count()),
                 "null_count": str(self.null_count()),
@@ -1654,7 +1654,7 @@ class Series:
 
         return pl.DataFrame(
             {"statistic": stats.keys(), "value": stats.values()},
-            schema={"statistic": Utf8, "value": stats_dtype},
+            schema={"statistic": String, "value": stats_dtype},
         )
 
     def sum(self) -> int | float:
@@ -7052,7 +7052,7 @@ class Series:
         True
 
         """
-        return self.dtype == Utf8
+        return self.dtype == String
 
     @deprecate_renamed_function("gather_every", version="0.19.14")
     def take_every(self, n: int, offset: int = 0) -> Series:
