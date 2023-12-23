@@ -278,7 +278,7 @@ def _cast_repr_strings_with_schema(
         for tp in df.schema.values():
             if tp != String:
                 raise TypeError(
-                    f"DataFrame should contain only Utf8 string repr data; found {tp!r}"
+                    f"DataFrame should contain only String repr data; found {tp!r}"
                 )
 
     # duration string scaling

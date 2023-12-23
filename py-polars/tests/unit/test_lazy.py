@@ -47,7 +47,7 @@ def test_lazy() -> None:
     [
         ({}, "0 cols, {}"),
         ({"a": [1]}, '1 col, {"a": Int64}'),
-        ({"a": [1], "b": ["B"]}, '2 cols, {"a": Int64, "b": Utf8}'),
+        ({"a": [1], "b": ["B"]}, '2 cols, {"a": Int64, "b": String}'),
         ({"a": [1], "b": ["B"], "c": [0.0]}, '3 cols, {"a": Int64 … "c": Float64}'),
     ],
 )

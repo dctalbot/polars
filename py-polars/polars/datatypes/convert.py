@@ -172,16 +172,16 @@ def unpack_dtypes(
     >>> struct_dtype = pl.Struct(
     ...     [
     ...         pl.Field("a", pl.Int64),
-    ...         pl.Field("b", pl.Utf8),
+    ...         pl.Field("b", pl.String),
     ...         pl.Field("c", pl.List(pl.Float64)),
     ...     ]
     ... )
     >>> unpack_dtypes([struct_dtype, list_dtype])  # doctest: +IGNORE_RESULT
-    {Float64, Int64, Utf8}
+    {Float64, Int64, String}
     >>> unpack_dtypes(
     ...     [struct_dtype, list_dtype], include_compound=True
     ... )  # doctest: +IGNORE_RESULT
-    {Float64, Int64, Utf8, List(Float64), Struct([Field('a', Int64), Field('b', Utf8), Field('c', List(Float64))])}
+    {Float64, Int64, String, List(Float64), Struct([Field('a', Int64), Field('b', String), Field('c', List(Float64))])}
 
     """  # noqa: W505
     if not dtypes:

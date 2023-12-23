@@ -7037,13 +7037,13 @@ class Series:
         """
         return self.dtype == Boolean
 
-    @deprecate_function("Use `Series.dtype == pl.Utf8` instead.", version="0.19.14")
+    @deprecate_function("Use `Series.dtype == pl.String` instead.", version="0.19.14")
     def is_utf8(self) -> bool:
         """
-        Check if this Series datatype is a Utf8.
+        Check if this Series datatype is a String.
 
         .. deprecated:: 0.19.14
-            Use `Series.dtype == pl.Utf8` instead.
+            Use `Series.dtype == pl.String` instead.
 
         Examples
         --------

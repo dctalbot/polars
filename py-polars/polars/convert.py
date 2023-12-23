@@ -152,7 +152,7 @@ def from_dicts(
     >>> pl.from_dicts(
     ...     data,
     ...     schema=["a", "b", "c", "d"],
-    ...     schema_overrides={"c": pl.Float64, "d": pl.Utf8},
+    ...     schema_overrides={"c": pl.Float64, "d": pl.String},
     ... )
     shape: (3, 4)
     ┌─────┬─────┬──────┬──────┐
@@ -286,7 +286,7 @@ def _from_dataframe_repr(m: re.Match[str]) -> DataFrame:
             if coldata:
                 coldata.pop(idx)
 
-    # init cols as utf8 Series, handle "null" -> None, create schema from repr dtype
+    # init cols as String Series, handle "null" -> None, create schema from repr dtype
     data = [
         pl.Series([(None if v == "null" else v) for v in cd], dtype=String)
         for cd in coldata

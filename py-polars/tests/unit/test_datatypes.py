@@ -139,7 +139,7 @@ def test_dtypes_hashable() -> None:
         (pl.Struct, "Struct"),
         (
             pl.Struct({"name": pl.String, "ids": pl.List(pl.UInt32)}),
-            "Struct({'name': Utf8, 'ids': List(UInt32)})",
+            "Struct({'name': String, 'ids': List(UInt32)})",
         ),
     ],
 )
