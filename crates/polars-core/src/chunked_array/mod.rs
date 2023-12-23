@@ -523,7 +523,7 @@ impl AsSinglePtr for BooleanChunked {}
 impl AsSinglePtr for ListChunked {}
 #[cfg(feature = "dtype-array")]
 impl AsSinglePtr for ArrayChunked {}
-impl AsSinglePtr for Utf8Chunked {}
+impl AsSinglePtr for StringChunked {}
 impl AsSinglePtr for BinaryChunked {}
 #[cfg(feature = "object")]
 impl<T: PolarsObject> AsSinglePtr for ObjectChunked<T> {}
@@ -645,7 +645,7 @@ impl ValueSize for ArrayChunked {
             .fold(0usize, |acc, arr| acc + arr.get_values_size())
     }
 }
-impl ValueSize for Utf8Chunked {
+impl ValueSize for StringChunked {
     fn get_values_size(&self) -> usize {
         self.chunks
             .iter()
@@ -692,7 +692,7 @@ pub(crate) mod test {
             .map(|opt| opt.unwrap())
             .collect::<Vec<_>>();
         assert_eq!(b, [1, 2, 3, 9]);
-        let a = Utf8Chunked::new("a", &["b", "a", "c"]);
+        let a = StringChunked::new("a", &["b", "a", "c"]);
         let a = a.sort(false);
         let b = a.into_iter().collect::<Vec<_>>();
         assert_eq!(b, [Some("a"), Some("b"), Some("c")]);
@@ -796,7 +796,7 @@ pub(crate) mod test {
         let sorted = s.sort(true);
         assert_slice_equal(&sorted, &[9, 4, 2]);
 
-        let s: Utf8Chunked = ["b", "a", "z"].iter().collect();
+        let s: StringChunked = ["b", "a", "z"].iter().collect();
         let sorted = s.sort(false);
         assert_eq!(
             sorted.into_iter().collect::<Vec<_>>(),
@@ -807,7 +807,7 @@ pub(crate) mod test {
             sorted.into_iter().collect::<Vec<_>>(),
             &[Some("z"), Some("b"), Some("a")]
         );
-        let s: Utf8Chunked = [Some("b"), None, Some("z")].iter().copied().collect();
+        let s: StringChunked = [Some("b"), None, Some("z")].iter().copied().collect();
         let sorted = s.sort(false);
         assert_eq!(
             sorted.into_iter().collect::<Vec<_>>(),
@@ -826,10 +826,10 @@ pub(crate) mod test {
         let s = BooleanChunked::new("", &[true, false]);
         assert_eq!(Vec::from(&s.reverse()), &[Some(false), Some(true)]);
 
-        let s = Utf8Chunked::new("", &["a", "b", "c"]);
+        let s = StringChunked::new("", &["a", "b", "c"]);
         assert_eq!(Vec::from(&s.reverse()), &[Some("c"), Some("b"), Some("a")]);
 
-        let s = Utf8Chunked::new("", &[Some("a"), None, Some("c")]);
+        let s = StringChunked::new("", &[Some("a"), None, Some("c")]);
         assert_eq!(Vec::from(&s.reverse()), &[Some("c"), None, Some("a")]);
     }
 
@@ -839,7 +839,7 @@ pub(crate) mod test {
         use crate::{disable_string_cache, SINGLE_LOCK};
         let _lock = SINGLE_LOCK.lock();
         disable_string_cache();
-        let ca = Utf8Chunked::new("", &[Some("foo"), None, Some("bar"), Some("ham")]);
+        let ca = StringChunked::new("", &[Some("foo"), None, Some("bar"), Some("ham")]);
         let ca = ca
             .cast(&DataType::Categorical(None, Default::default()))
             .unwrap();
